@@ -15,6 +15,7 @@ Activity - Type of activity performed when the corresponding measurements were t
 6) LAYING 
 
 ##Measurements
+These are the mean of numeric values provided.
 
 tBodyAccMeanX
 tBodyAccMeanY

@@ -5,6 +5,9 @@
 #Appropriately labels the data set with descriptive variable names. 
 #From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
+# load package reshape2 to use melt function 
+library(reshape2)
+
 #Merges the training and the test sets to create one data set.
 
 # read train and test data from file
@@ -60,16 +63,17 @@ colnames(meanStdDataX) <- columnNames
 
 # assign column names to Y and Subject data
 names(mergedDataSubject) <- "Subject"
-names(mergedDataY) <- "Label"
+names(mergedDataY) <- "Activity"
 
 # merge X, Y and Subject data
 mergedDataFinal <- cbind(mergedDataSubject, mergedDataY, meanStdDataX)
 
-# melt data for subject and Label
-meltedData <- melt(mergedDataFinal, id=c("Subject","Label"), measure.vars=colnames(meanStdDataX))
+# melt data for subject and activity
+meltedData <- melt(mergedDataFinal, id=c("Subject","Activity"), measure.vars=colnames(meanStdDataX))
 
-# group merged data by Subject and Label and calculate mean of variables
-tidyData <- dcast(meltedData, Subject+Label ~ variable, mean)
+# group merged data by Subject and Activity and calculate mean of variables
+tidyData <- dcast(meltedData, Subject+Activity ~ variable, mean)
 
 # write into file tidyData.txt
 write.table(tidyData, file = "data\\tidyData.txt", row.names = FALSE)
+
